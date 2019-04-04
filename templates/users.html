@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Users</h1>
+{% for user in users_template %}
+<article class="message is-primary">
+    <div class="message-body">
+        <div>{{user.full_name}}</div>
+    </div>
+</article>
+{% endfor %}
+{% endblock %}
