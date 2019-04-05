@@ -1,18 +1,44 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form method="POST" action="" class="form">
+<form method="POST" action="{{ url_for('register') }}" class="form">
+    {{ form.csrf_token }}
     {{ form.hidden_tag() }}
-    {% for field in form %}
-        <div class="field">
-            {% if field.errors %}
-                {% for error in field.errors %}
-                    <div class="notification error">{{ error }}</div>
-                {% endfor %}
-            {% endif %}
-            {{ field(placeholder=field.label.text) }}
-        </div>
-    {% endfor %}
-    <button type="submit" id="submit">Register!</button>
+            <div>
+            {{ form.firstName.label }}
+            {{ form.firstName() }}
+            </div>
+            <div>
+            {{ form.lastName.label }}
+            {{ form.lastName() }}
+            </div>
+            <div>
+            {{ form.email.label }}
+            {{ form.email() }}
+            </div>
+            <div>
+            {{ form.password.label }}
+            {{ form.password() }}
+            </div>
+            <div>
+            {{ form.password2.label }}
+            {{ form.password2() }}
+            </div>
+            <div>
+            {{ form.isCounselor.label }}
+            {{ form.isCounselor() }}
+            </div>
+    <button type="submit" id="submit">Register</button>
 </form>
 {% endblock %}
+
+<!-- 
+email = CharField(unique=True)
+    password = CharField(max_length=100)
+    isCounselor = BooleanField(default="False")
+
+WHAT ARE MACROS????
+-->
+
+    
+          

@@ -1,12 +1,16 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Users</h1>
+<h1>Therapists</h1>
 {% for user in users_template %}
 <article class="message is-primary">
     <div class="message-body">
-        <div>{{user.full_name}}</div>
+        <a href={{url_for('schedule', counselor_id = user.id)}}>
+        <div>{{user.firstName}}</div>
+        <div> {{user.lastName}}</div>
+        </a>
     </div>
 </article>
+<br/>
 {% endfor %}
 {% endblock %}
