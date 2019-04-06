@@ -1,0 +1,41 @@
+{% extends "layout.html"%}
+
+{% block content%}
+
+<div class="profile-wrapper columns is-multiline">
+    <div class="user-profile-box media column is-half">
+        <article class="message secondary">
+            <div class="profile-pic">
+                <img class="rounded-circle account-img" src="{{ user.picture }}" style="height: 500px; width: auto;">
+            </div>
+            <div class="media-body message-body">
+                <h2 class="account-heading">Profile for <span>{{user.firstName}} {{user.lastName}}</span></h2>
+                <p class="text-secondary">Name: <span>{{user.firstName}} {{user.lastName}}</span> </p>
+                <p class="text-secondary">Phone: <span>{{user.phone}}</span></p>
+                <p class="text-secondary">Address: <span>{{user.address}},</span></p>
+                <p class="text-secondary"><span>{{user.city}}, {{user.state}} {{user.zipcode}}</span></p>
+
+                <p class="text-secondary">Date Joined: <span>{{user.joined_at.strftime("%x") }}</span></p>
+                    {% if user.isCounselor == True %}
+                    <p class="text-secondary">
+                        Status: 
+                    <span>Counselor</span>
+                    </p>
+                    <button>
+                            <a href={{url_for('schedule', counselor_id = user.id)}}>
+                            Schedule an appointment with {{user.firstName}} {{user.lastName}}
+                            </a>
+                    </button>
+                    {% else%}
+                    <p class="text-secondary">
+                            Status: 
+                            <span>Client</span>
+                    </p>
+                    {% endif %}
+                
+            </div>
+        </article>
+    </div>
+</div>
+        {%endblock%}
+   

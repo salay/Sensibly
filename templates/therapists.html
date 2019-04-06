@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Therapists</h1>
+
+{% if current_user.is_authenticated %}
+
+<h5>Click on the counselor you would like to see to schedule an appointment with them</h5>
+
+{% for user in users_template %}
+<article class="message is-primary">
+    <div class="message-body">
+        <a href={{url_for('schedule', counselor_id = user.id)}}>
+        <div>{{user.firstName}} {{user.lastName}}</div>
+        <div><img src="{{ user.picture }}" style="height: 200px; width: auto;"></div>
+        </a>
+        <button>
+            <a href={{url_for('schedule', counselor_id = user.id)}}>
+            Schedule an appointment with {{user.firstName}} {{user.lastName}}
+            </a>
+        </button>
+        <button>
+            <a href={{url_for('users', counselor_id = user.id)}}>
+            View Profile
+            </a>
+        </button>
+    </div>
+</article>
+<br/>
+{% endfor %}
+
+{%else%}
+{% for user in users_template %}
+<article class="message is-primary">
+    <div class="message-body">
+        <div>{{user.firstName}} {{user.lastName}}</div>
+        <div><img src="{{ user.picture }}" style="height: auto; width: 300px;"></div>
+    </div>
+</article>
+<br/>
+{% endfor %}
+
+{%endif%}
+
+
+{% endblock %}

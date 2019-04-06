@@ -1,34 +1,16 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form method="POST" action="{{ url_for('register') }}" class="form">
-    {{ form.csrf_token }}
+{% from 'macros.html' import render_field %}
+
+<form method="POST" action="" class="form">
     {{ form.hidden_tag() }}
-            <div>
-            {{ form.firstName.label }}
-            {{ form.firstName() }}
-            </div>
-            <div>
-            {{ form.lastName.label }}
-            {{ form.lastName() }}
-            </div>
-            <div>
-            {{ form.email.label }}
-            {{ form.email() }}
-            </div>
-            <div>
-            {{ form.password.label }}
-            {{ form.password() }}
-            </div>
-            <div>
-            {{ form.password2.label }}
-            {{ form.password2() }}
-            </div>
-            <div>
-            {{ form.isCounselor.label }}
-            {{ form.isCounselor() }}
-            </div>
-    <button type="submit" id="submit">Register</button>
+    {% for field in form %}
+        {{ render_field(field) }}
+    {% endfor %}
+    Check the box above if you are a counselor.
+    <br/>
+    <button type="submit" id="submit">Register!</button>
 </form>
 {% endblock %}
 

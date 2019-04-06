@@ -4,13 +4,36 @@
 
 <div class="wrapper">
     <div>
+            <table style="width:100%">
             <h4>Here are your appointments:</h4>
+            <tr>
+            <th>Appointment Time</th>
             {% for appointment in appointments_template %}
-            <h6>{{ appointment.time }}</h6>
-            <h6> {{ appointment.client_id }}</h6>
-            <h6>{{counselor.firstName}} </h6>
+
+            <td>
+            <form action="" method="POST">
+                    <input name="appointment_id" type="hidden" value="{{appointment.id}}">
+                    <input name="submit" type="submit" value="Edit", class_="button">
+                    <input name="submit" type="submit" value="Delete", class_="button">
+            </form>
+            {{ appointment.date.strftime("%A") }},
+            {{ appointment.date.strftime("%x") }}
+            <br/> 
+            {{ appointment.time }}</td>
             {% endfor %}
+        </tr>
+            <tr>
+            <th>Counselor</th>
+            {% for counselor in counselors %}
+            {% for counsel in counselor %}
+            <td>therapist name: {{ counsel.firstName  }}</td>
+            {% endfor %}
+            {% endfor %}
+        </tr>
+    </table>
     </div>
+
+    <h3>Schedule an appointment with {{current_counselor.firstName}}</h3>
 
         <div class="calendar-wrapper">
                 <button id="btnPrev" type="button">Prev</button>
@@ -32,7 +55,8 @@
               click on the time you want to make the appointment
               <form method="POST" action="" class="form">
                     {{ form.csrf_token }}
-                    
+                        {{ form.date.label }}
+                        {{ form.date() }}
                         <br/>
                         {{ form.time.label }}
                         {{ form.time() }}
@@ -42,7 +66,6 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Create Appointment</button>
             </div>
           </div>
         </div>
