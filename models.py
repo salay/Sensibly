@@ -14,11 +14,11 @@ class User(UserMixin, Model):
     email = CharField(unique=True)
     password = CharField(max_length=100)
 
-    phone = IntegerField()
+    phone = IntegerField(default=1234567)
     address = CharField()
     city = CharField()
     state = CharField()
-    zipcode = IntegerField()
+    zipcode = IntegerField(default=00000)
     #role = CharField()
     picture = TextField(default="http://www.mentalhealthresourcespc.com/faces.jpg")
     isCounselor = BooleanField(default="False")
@@ -49,10 +49,10 @@ class User(UserMixin, Model):
 
 class Appointment(Model):
     counselor = ForeignKeyField(model=User)
-    #time = DateTimeField(default=datetime.datetime.now)
     client = ForeignKeyField(model=User)
-    date = DateTimeField(default=datetime.datetime.now)
+    date = DateTimeField()
     time = CharField()
+    #time = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         database = DATABASE
@@ -74,42 +74,3 @@ def initialize():
     DATABASE.connect()
     DATABASE.create_tables([User, Appointment], safe=True)
     DATABASE.close()
-
-
-
-
-
-
-
-
-
-# class Counselor(User, Model):
-#     firstName = CharField()
-#     lastName = CharField()
-#     phone = IntegerField()
-#     secondaryPhone = IntegerField()
-#     address = CharField()
-#     city = CharField()
-#     state = CharField()
-#     zipcode = IntegerField()
-
-#     class Meta:
-#         database = DATABASE
-
-
-# class Client(User, Model):
-#     firstName = CharField()
-    # lastName = CharField()
-    # phone = IntegerField()
-    # secondaryPhone = IntegerField()
-    # address = CharField()
-    # city = CharField()
-    # state = CharField()
-    # zipcode = IntegerField()
-    # emergency-contact-name = CharField()
-    # emergency-contact-relationship = CharField()
-    # emergency-contact-phone = IntegerField()
-
-    # class Meta:
-    #     database = DATABASE
-

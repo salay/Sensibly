@@ -1,0 +1,20 @@
+
+{% extends "profile.html" %}
+
+{% block editProfileForm %}
+
+{% from 'macros.html' import render_field %}
+
+<form method="POST" action="" class="form" style="display: flex; flex-direction: column;">
+    {{ form.hidden_tag() }}
+    {% for field in form %}
+        {% if field.id == 'submit' %}
+        {{ field(value= "Edit Profile") }}
+        {%else%}
+        {{ field(value= user[field.id]) }}
+        {%endif%}
+    {% endfor %}
+    <br/>
+</form>
+
+{% endblock %}

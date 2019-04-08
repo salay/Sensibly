@@ -7,7 +7,7 @@ from flask_bcrypt import check_password_hash
 import models
 import forms
 
-from forms import MakeAppointment, RegisterForm, LoginForm
+from forms import MakeAppointment, RegisterForm, LoginForm, EditProfileForm
 
 app = Flask(__name__)
 app.secret_key = 'watermelon.watermelon.watermelon'
@@ -45,35 +45,51 @@ def after_request(response):
 def index():
     return render_template("home.html")
 
+# @app.route('/profile', methods=['GET', 'POST'])
+# def users():
+#     user_id = int(current_user.id)
+#     user_data = models.User.get(models.User.id == user_id)
+    
+#     return render_template("new_user.html", title="New User", form=form, user=user_data)
+    
 
-# @app.route('/reviews/<review_id>')
-# def reviews(review_id = None):
-#     if review_id == None:
-#         reviews = models.Review.select().limit(10)
-#         return render_template("reviews.html", reviews_template = reviews)
-#     else:
-#         review_id = int(review_id)
-#         review = models.Reviews.get(models.Reviews.id == review_id)
-#         return render_template("reviews.html", reviews=reviews)
+@app.route('/my-profile', methods=['GET', 'POST'])
+@app.route('/my-profile/', methods=['GET', 'POST'])
+def profile():
+    user_id = int(current_user.id)
+    user_data = models.User.get(models.User.id == user_id)
+    form = EditProfileForm()
+    #user_id = request.form.get('user_id', '')
+    command = request.form.get('submit', '')
+    if command == 'Edit Profile':
+        #user_id = int(current_user.id)
+        user = models.User.get(models.User.id == user_id)
+        #print(user)
+        #print(form.full_name.data)
+        user.firstName = form.firstName.data
+        user.lastName = form.lastName.data
+        user.phone = form.phone.data
+        user.address = form.address.data
+        user.city = form.city.data
+        user.state = form.state.data
+        user.zipcode = form.zipcode.data
+        user.picture = form.picture.data
+        user.save()
+        return redirect('/my-profile')
+
+    return render_template("edit_profile.html", user=user_data, form=form)
 
 
-@app.route('/profile', methods=['GET', 'POST'])
-@app.route('/profile/', methods=['GET', 'POST'])
-@app.route('/profile/<counselor_id>', methods=['GET', 'POST'])
-def users(counselor_id = None):
-    if counselor_id == None:
-        user_id = int(current_user.id)
-        user_data = models.User.get(models.User.id == user_id)
-        return render_template("profile.html", user=user_data)
-    else:
-        counselor_id = int(counselor_id)
-        user_data = models.User.get(models.User.id == counselor_id)
-        return render_template("profile.html", user=user_data)
-
-@app.route('/schedule/<counselor_id>',  methods=['GET', 'POST', 'DELETE'])
-def get_schedule(counselor_id):
-    counselorId = int(counselor_id)
-    appointments = models.Appointment.select().where(models.Appointment.counselor == counselorId)
+@app.route('/schedule/',  methods=['GET', 'POST', 'DELETE'])
+def get_schedule():
+    counselor_id = int(current_user.id)
+    appointments = models.Appointment.select().where(models.Appointment.counselor == counselor_id)
+    #unfortunately if appointments is null the counselor gets an error on the page
+    appointment_id = request.form.get('appointment_id', '')
+    command = request.form.get('submit', '')
+    if command == 'Delete':
+        models.Appointment.delete_by_id(appointment_id)
+        return redirect(url_for("get_schedule", appointments=appointments, counselor_id=counselor_id))
     return render_template("schedule.html", appointments=appointments)
 
 
@@ -136,9 +152,15 @@ def schedule(counselor_id):
 
 @app.route('/all-therapists/', methods=['GET', 'POST'])
 #@app.route('/schedule/<provider-username>', methods=['POST', 'GET']) (counselors)
-def user():
-    users = models.User.select().limit(10).where(models.User.isCounselor == 1)
-    return render_template("therapists.html", users_template = users)
+def therapists():
+    therapists = models.User.select().limit(10).where(models.User.isCounselor == 1)
+    return render_template("therapists.html", therapists_template = therapists)
+
+@app.route('/therapist-profile/<counselor_id>', methods=['GET', 'POST'])
+def therapistProfile(counselor_id = " mary "):
+        counselor_id = int(counselor_id)
+        user_data = models.User.get(models.User.id == counselor_id)
+        return render_template("therapist_profile.html", user=user_data, counselor_id = counselor_id)
 
 
 @app.route('/register', methods=('GET', 'POST'))

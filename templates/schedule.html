@@ -6,7 +6,6 @@ display the list of appointments made with said therapist here.
 <div>
 
         <h4>Here is your schedule {{ appointments[0].counselor.firstName}}:</h4>
-        <tr>
         {% for appointment in appointments %}
         <div>
                 {{ appointment.date.strftime("%A") }},

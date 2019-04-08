@@ -3,34 +3,15 @@ from flask_wtf import FlaskForm as Form
 import datetime
 from models import User
 
-from wtforms import StringField, PasswordField, TextAreaField, BooleanField, SelectField, DateTimeField, IntegerField
+from wtforms import StringField, PasswordField, TextAreaField, BooleanField, SelectField, DateTimeField, IntegerField, SubmitField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                Length, EqualTo)
 
 from wtforms.fields.html5 import DateField
 
-def email_exists(form, field):
-    if User.select().where(User.email == field.data).exists():
-        raise ValidationError('User with that email already exists.')
+import states 
 
-class RegisterForm(Form):
-    firstName = StringField(
-        'First Name',
-        validators=[
-            DataRequired()
-        ])
-    lastName = StringField(
-        'Last Name',
-        validators=[
-            DataRequired()
-        ])
-    
-    phone = IntegerField('Phone Number')
-    address = StringField('Address')
-    city = StringField('City')
-
-    state = SelectField(u"Which State ",
-        choices=[
+states = [
             ('None', 'State (if applicable)'),
             ('AL', 'Alabama'),
             ('AK', 'Alaska'),
@@ -83,7 +64,30 @@ class RegisterForm(Form):
             ('WV', 'West Virginia'),
             ('WI', 'Wisconsin'),
             ('WY', 'Wyoming'),
-            ])
+            ]
+            
+def email_exists(form, field):
+    if User.select().where(User.email == field.data).exists():
+        raise ValidationError('User with that email already exists.')
+
+class RegisterForm(Form):
+    firstName = StringField(
+        'First Name',
+        validators=[
+            DataRequired()
+        ])
+    lastName = StringField(
+        'Last Name',
+        validators=[
+            DataRequired()
+        ])
+    
+    phone = IntegerField('Phone Number')
+    address = StringField('Address')
+    city = StringField('City')
+
+    state = SelectField(u"Which State ",
+        choices= states)
 
     zipcode = IntegerField('Zipcode')
     picture = StringField('Picture')
@@ -114,13 +118,25 @@ class LoginForm(Form):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
 
-
 class MakeAppointment(Form):
-    date = DateField('The date', default=datetime.datetime.now, validators=[DataRequired()])
+    date = DateField('The date', validators=[DataRequired()])
     time = SelectField(u"Which Time ", choices=[('9:00 AM - 10:00 AM', '9:00 AM - 10:00 AM'), ('10:00 AM - 11:00 AM', '10:00 AM - 11:00 AM'), 
     ('11:00 AM - 12:00 PM', '11:00 AM - 12:00 PM'), ('12:00 PM - 1:00 PM', '12:00 PM - 1:00 PM'), ('1:00 PM - 2:00 PM', '1:00 PM - 2:00 PM'), ('2:00 PM - 3:00 PM', '2:00 PM - 3:00 PM'), 
     ('3:00 PM - 4:00 PM', '3:00 PM - 4:00 PM'), ('4:00 PM - 5:00 PM', '4:00 PM - 5:00 PM') ])
 
+
+class EditProfileForm(Form):
+    firstName = StringField('First Name')
+    lastName = StringField('Last Name')
+    phone = IntegerField('Phone Number')
+    address = StringField('Address')
+    city = StringField('City')
+    state = SelectField(u"Which State ",
+        choices= states)
+    zipcode = IntegerField('Zipcode')
+    picture = StringField('Picture')
+    submit = SubmitField('Edit Profile')
+    
 
     # class MyForm(forms.Form):
     # date = forms.DateField(...)
