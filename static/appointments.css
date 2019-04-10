@@ -1,0 +1,56 @@
+*{
+    box-sizing:border-box;
+  }
+
+  .appointments-table {
+    width: 100%;
+    overflow: scroll;
+  }
+
+/* calendar styles */
+
+  
+  html, body {
+    height:100%;
+  }
+  
+  .calendar-wrapper {
+    width:60vw;
+    margin:3em auto;
+    padding:2em;
+  }
+  
+  table {
+    clear:both;
+    width:100%;
+  }
+  
+  td {
+    height: 120px;
+    text-align:center;
+    vertical-align:middle;
+    width: calc(100% / 7);
+    border:1px solid black;
+  }
+  td.not-current {
+      color: #91b0b3;
+  }
+  td.today {
+    font-weight:700;
+    font-size:1.5em;
+  }
+
+
+  /* td.normal, td.today{
+    border: 1px solid black;
+  } */
+
+  
+  td.before {
+      background: lightblue;
+  }
+  
+  td.normal:hover, td.today:hover {
+    cursor: pointer;
+  }
+  

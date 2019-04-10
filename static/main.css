@@ -1,0 +1,23 @@
+* {
+    
+/* background: #f1efee */
+
+}
+
+nav h6 {
+    color:#465766 !important;
+}
+
+a {
+    color:#465766 !important;
+    text-decoration: none !important;
+}
+
+nav {
+    margin: 0 5em;
+   
+    line-height: 1em;
+    background-color: transparent;
+    position: fixed;
+  }
+  

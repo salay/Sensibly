@@ -7,6 +7,8 @@ from flask_bcrypt import check_password_hash
 import models
 import forms
 
+import datetime
+
 from forms import MakeAppointment, RegisterForm, LoginForm, EditProfileForm
 
 app = Flask(__name__)
@@ -83,25 +85,22 @@ def profile():
 @app.route('/schedule/',  methods=['GET', 'POST', 'DELETE'])
 def get_schedule():
     counselor_id = int(current_user.id)
-    appointments = models.Appointment.select().where(models.Appointment.counselor == counselor_id)
+    appointments = models.Appointment.select().where(models.Appointment.counselor == counselor_id).order_by(models.Appointment.date.asc())
+    form = forms.MakeAppointment()
     #unfortunately if appointments is null the counselor gets an error on the page
     appointment_id = request.form.get('appointment_id', '')
     command = request.form.get('submit', '')
     if command == 'Delete':
         models.Appointment.delete_by_id(appointment_id)
         return redirect(url_for("get_schedule", appointments=appointments, counselor_id=counselor_id))
-    return render_template("schedule.html", appointments=appointments)
+    return render_template("schedule.html", appointments=appointments, form=form)
 
 
 @app.route('/appointments/<counselor_id>',  methods=['GET', 'POST', 'DELETE'])
-#@app.route('/schedule', methods=['GET', 'POST'])
 def schedule(counselor_id):
-    #counselor_name = counselor_name
     counselor_id = int(counselor_id)
-    #print(counselor_id)
 
     current_counselor = models.User.select().limit(10).where(models.User.id == counselor_id)[0]
-    #print(counselor)
 
     #array of the appointments made by the user
     appointments = models.Appointment.select().limit(10).where(models.Appointment.client == current_user.id)
@@ -112,12 +111,8 @@ def schedule(counselor_id):
         #print(counselor.firstName)
         counselors_for_appointments.append(counselor)
         #print(i.counselor_id)
-
-    
-    print(counselors_for_appointments)
-    print(appointments)
-
-   
+    #print(counselors_for_appointments)
+    #print(appointments)
 
     # if a counselor wanted to see all the appointments a client made for them and who made them
     #if the counselor is signed in the code below will print out all appointment TIMES assigned to them
@@ -127,14 +122,42 @@ def schedule(counselor_id):
     appointment_id = request.form.get('appointment_id', '')
     command = request.form.get('submit', '')
 
+
+
+#if form.date.data < datetime.datetime.now cannot create.... add this conditionals
+
+
     #print(current_user.id)
     form = forms.MakeAppointment()
+
+    if command == 'Cancel':
+        models.Appointment.delete_by_id(appointment_id)
+        return redirect(url_for("schedule", counselor_id=counselor_id))
+    elif command == 'Edit':
+        print("hey I'm editing yay!")
+        appointment = models.Appointment.get(models.Appointment.id == appointment_id)
+        form.date.data = appointment.date 
+        form.time.data = appointment.time
+        counselor_id = appointment.counselor_id
+        current_user.id = appointment.current_user.id    
+        return redirect(url_for("schedule", counselor_id=counselor_id))
+
+#creates a new appointment
     if form.validate_on_submit():
-        appointmentTaken = models.Appointment.get_or_none(models.Appointment.counselor == counselor_id and models.Appointment.date == form.date.data and models.Appointment.time == form.time.data)
-        print(appointmentTaken)
+        print("I'm creating an appt")
+        appointmentTaken = models.Appointment.select().where(
+            (models.Appointment.counselor == counselor_id) &
+            (models.Appointment.date == form.date.data) &
+            (models.Appointment.time == form.time.data)
+            )
+        #print(appointmentTaken)
+
+
     #if form.id.data == '': 
         # if !models.Appointment.select().where(models.Appointment.counselor == counselor_id and models.Appointment.date == form.date.data and models.Appointment.time == form.time.data)
-        if appointmentTaken == None:
+        if appointmentTaken.count() == 0:
+            
+            flash("Created New Appointment","success")
             models.Appointment.create_appointment(
                 date=form.date.data, 
                 time=form.time.data, 
@@ -142,9 +165,10 @@ def schedule(counselor_id):
                 client = current_user.id
                 )
             return redirect(url_for("schedule", counselor_id=counselor_id))
-    if command == 'Delete':
-            models.Appointment.delete_by_id(appointment_id)
+        else:
+            flash("Appoinment slot already taken please schedule another appointment sorry","error")
             return redirect(url_for("schedule", counselor_id=counselor_id))
+    
     # else:
     #     print("appt not valid?")
     return render_template("appointments.html", appointments_template=appointments, form=form, counselors=counselors_for_appointments, current_counselor=current_counselor)

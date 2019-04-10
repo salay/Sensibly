@@ -1,0 +1,40 @@
+.hero {
+    width:  100%;
+    height: 55em;
+    margin: 0 auto;
+    background-image:  
+    linear-gradient(
+      rgba(241,239,238, 0.45), 
+      rgba(241,239,238, 0.45)
+    ),
+    url("media/hero.jpg");
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .hero-text {
+    color:rgba(70,87,102, .9);
+      padding-top: 6em;
+      font-family: 'Sacramento', cursive;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+  }
+
+  .hero-text h1, .hero-text h6 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .hero-text h1 {
+  font-size: 88px;
+  }
+
+  .hero-text h6 {
+    font-size: 36px;
+    }
+

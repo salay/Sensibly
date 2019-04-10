@@ -1,11 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-display the list of appointments made with said therapist here.
+<div class="container">
 
-<div>
-
-        <h4>Here is your schedule {{ appointments[0].counselor.firstName}}:</h4>
+        <h4>Here is your schedule, {{ appointments[0].counselor.firstName}}:</h4>
         {% for appointment in appointments %}
         <div>
                 {{ appointment.date.strftime("%A") }},
@@ -18,13 +16,13 @@ display the list of appointments made with said therapist here.
             </div>
         <form action="" method="POST">
                 <input name="appointment_id" type="hidden" value="{{appointment.id}}">
-                <input name="submit" type="submit" value="Edit", class_="button">
+                <text name="submit" type="submit" value="Edit", class_="button" data-toggle="modal" data-target="#exampleModal">Edit</text>
                 <input name="submit" type="submit" value="Delete", class_="button">
         </form>
         </div>
         <br/>
         {% endfor %}
-
+        
 </div>
 
 {% endblock %}

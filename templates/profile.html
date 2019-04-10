@@ -12,7 +12,6 @@
                 <p class="text-secondary">Phone: <span>{{user.phone}}</span></p>
                 <p class="text-secondary">Address: <span>{{user.address}},</span></p>
                 <p class="text-secondary"><span>{{user.city}}, {{user.state}} {{user.zipcode}}</span></p>
-
                 <p class="text-secondary">Date Joined: <span>{{user.joined_at.strftime("%x") }}</span></p>
                     {% if user.isCounselor == True %}
                     <p class="text-secondary">
@@ -25,7 +24,6 @@
                             <span>Client</span>
                     </p>
                     {% endif %}
-                
             </div>
             <div>
                     {% block editProfileForm %}

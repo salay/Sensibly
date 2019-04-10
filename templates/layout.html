@@ -4,29 +4,39 @@
 <head>
   <title></title>
 
-  <link rel="stylesheet" type="text/css" href="/static/style.css"><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="../static/main.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-  <div class="container">
+  <div>
+      
     <div class="row">
       <div class="col">
-        <h4>{% if current_user.is_authenticated %} Hello: {{current_user.firstName}} {%endif%}</h4>
-      </div>
-      <div class="col">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
+            <nav class="navbar navbar-fixed-top" role="navigation" aria-label="main navigation">
             {% if current_user.is_authenticated %}
+         
+                <h6>{% if current_user.is_authenticated %} Signed in as {{current_user.firstName}} {%endif%}</h6>
+            
                 <a href="{{url_for('logout')}}" title="logout">Logout</a>
                 <a href="{{ url_for('index') }}">home</a>
                 <a href="{{ url_for('therapists') }}">View all therapists</a>
                 <a href="{{url_for('profile')}}">Profile</a>
                 {% if current_user.isCounselor == True %}
-                <a href={{url_for('get_schedule', counselor_id = current_user.id)}}>Your Schedule!</a>
+                <a href={{url_for('get_schedule', counselor_id = current_user.id)}}>Your Schedule</a>
                 {%endif%}
                 {% else %}
+                <div >
+                    <h6>{% if current_user.is_authenticated %} Signed in as {{current_user.firstName}} {%endif%}</h6>
+                  </div>
                 <a href="{{url_for('login')}}" title="login">Login</a>
                 <a href="{{url_for('register')}}" title="register">register</a>
                 <a href="{{ url_for('index') }}">home</a>
@@ -35,17 +45,8 @@
         </nav>
       </div>
     </div>
-    <br>
+    
     <div class="row">
-      
-        {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class={{category}}>{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-      
       <div class="col">
         {% block content %}{% endblock %}
       </div>
