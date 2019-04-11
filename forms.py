@@ -9,8 +9,6 @@ from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
 
 from wtforms.fields.html5 import DateField
 
-import states 
-
 states = [
             ('None', 'State (if applicable)'),
             ('AL', 'Alabama'),
@@ -135,13 +133,3 @@ class EditProfileForm(Form):
     zipcode = IntegerField('Zipcode')
     picture = StringField('Picture')
     submit = SubmitField('Edit Profile')
-    
-
-    # class MyForm(forms.Form):
-    # date = forms.DateField(...)
-
-    # def clean_date(self):
-    #     date = self.cleaned_data['date']
-    #     if date < datetime.date.today():
-    #         raise forms.ValidationError("The date cannot be in the past!")
-    #     return date

@@ -19,6 +19,19 @@
                 <text name="submit" type="submit" value="Edit" class="btn" class_="button" data-toggle="modal" data-target="#exampleModal">Edit</text>
                 <input name="submit" type="submit" value="Delete" class="btn" class_="button">
         </form>
+
+        <form method="POST" action= "/schedule/{{appointment.counselor.id}}/edit"  class="form">
+                {{form.id}}
+                    {{ form.csrf_token }}
+                    <input name="appointment_id" type="hidden" value="{{appointment.id}}">
+                        {{ form.date.label }}
+                        {{ form.date() }}
+                        <br/>
+                        {{ form.time.label }}
+                        {{ form.time() }}
+                        <button type="submit" id="submit">Edit Appointment</button>
+            </form>   
+
         </div>
         <br/>
         {% endfor %}

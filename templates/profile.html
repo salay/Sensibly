@@ -44,44 +44,17 @@
                 {% for appointment in appointments_template %}
     
                 <div>
-                <form action="" method="POST">
-                        <input name="appointment_id" type="hidden" value="{{appointment.id}}">
-                        <i name="submit" type="submit" value="Edit", class_="button" data-toggle="modal" data-target="#editAppointmentModal" class="far fa-edit"> Edit</i>
-                        <input name="submit" type="submit" value="Cancel" class_="button">
-                </form>
                 {{ appointment.date.strftime("%A") }},
                 {{ appointment.date.strftime("%x") }}
                 {{ appointment.counselor.firstName}}
                 <br/> 
                 {{ appointment.time }}
               </div>
+            <br/>
                 {% endfor %}
             </div>
            
-         
-    <script>
-         function viewAppointments() {
-          console.log('clicked view appt')
-          var appointmentsTable = document.getElementById("your-appointments");
-          if (appointmentsTable.style.display != 'none') {
-          appointmentsTable.style.display = 'none';
-          }
-          else if (appointmentsTable.style.display == 'none') {
-              appointmentsTable.style.display = 'block';
-          }
-      }
-
-      function editProfile() {
-        var editProf = document.getElementById("editProfileForm");
-          if (editProf.style.display != 'none') {
-          editProf.style.display = 'none';
-          }
-          else if (editProf.style.display == 'none') {
-              editProf.style.display = 'block';
-          }
-      }
-        
-    </script>
+            <script src="../static/toggles.js"></script>
 </div >
 
 </div>

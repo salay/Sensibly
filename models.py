@@ -2,7 +2,6 @@ import datetime
 import moment
 from flask_moment import Moment
 from peewee import *
-
 from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
 
@@ -13,13 +12,11 @@ class User(UserMixin, Model):
     lastName = CharField()
     email = CharField(unique=True)
     password = CharField(max_length=100)
-
     phone = IntegerField(default=1234567)
     address = CharField()
     city = CharField()
     state = CharField()
     zipcode = IntegerField(default=00000)
-    #role = CharField()
     picture = TextField(default="http://www.mentalhealthresourcespc.com/faces.jpg")
     isCounselor = BooleanField(default="False")
     joined_at = DateTimeField(default=datetime.datetime.now)

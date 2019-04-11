@@ -10,22 +10,29 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              confirm the date and time you want to make the appointment
+            <div class="modal-body" style="text-align: center">
+              Confirm the date & time of your appointment
+              <br/>
+              <br/>
               <form method="POST" action="" class="form">
+                <div class='editElement'>
                     {{ form.csrf_token }}
-                        {{ form.date.label }}
+                        Confirm Date:
                         {{ form.date() }}
+                    </div>
                         <br/>
-                        {{ form.time.label }}
+                        <div class='editElement'>
+                        Time:
                         {{ form.time() }}
+                      </div>
+                        <br/>
+                        <div class='editElement'>
                         <button type="submit" id="submit">Create Appointment</button>
+                      </div>
                 </form>                  
               
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+          
           </div>
         </div>
       </div>

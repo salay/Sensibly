@@ -35,31 +35,33 @@
                 </div>
                 <form action="" method="POST">
                     <input name="appointment_id" type="hidden" value="{{appointment.id}}">
-                    <i name="submit" type="submit" value="Edit", class_="button" data-toggle="modal" data-target="#editAppointmentModal" class="far fa-edit"> Edit</i>
-                    <input name="submit" type="submit" value="Cancel" class_="button">
+                   
+                    <input name="submit" type="submit" value="Cancel" class_="button" style="background: none; border-radius: 5px;">        
             </form>
+
+           Edit Appointment:
+
+            <form style="display: block" method="POST" action= "/appointments/{{current_counselor.id}}/edit"  class="form editform" id="{{appointment.id}}">
+                {{form.id}}
+                    {{ form.csrf_token }}
+                    <input name="appointment_id" type="hidden" value="{{appointment.id}}">
+                        {{ form.date.label }}
+                        {{ form.date() }}
+                        <br/>
+                        {{ form.time.label }}
+                        {{ form.time() }}
+                        <br/>
+                        <button type="submit" id="submit">Edit Appointment</button>
+            </form>   
             <br/>
                   {% endfor %}
               </div>
              
            </div >
-      <script>
-           function viewAppointments() {
-            console.log('clicked view appt')
-            var appointmentsTable = document.getElementById("your-appointments");
-            if (appointmentsTable.style.display != 'none') {
-            appointmentsTable.style.display = 'none';
-            }
-            else if (appointmentsTable.style.display == 'none') {
-                appointmentsTable.style.display = 'block';
-            }
-        }
-          
-      </script>
+
+           <script src="../static/toggles.js"></script>
               
 </div>
-
-{% include "editAppointment.html"%}
 
 <script src="../static/appointments.js"></script>
 {% endblock %}

@@ -3,7 +3,7 @@
   }
 
   #your-appointments{
-    height: 23em;
+    height: 32em;
     overflow: scroll;
 }
 
@@ -52,7 +52,7 @@
 
   
   td.before {
-      background: gainsboro;
+      background: #e3ddd0;
   }
   
   td.normal:hover, td.today:hover {
