@@ -1,7 +1,5 @@
 
 
-
-
 var Cal = function(divId) {
 
     //Store div id

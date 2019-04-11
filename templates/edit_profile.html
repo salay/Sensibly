@@ -3,7 +3,7 @@
 {% block editProfileForm %}
 
 {% from 'macros.html' import render_field %}
-
+<div class="edit-profile">
 <form method="POST" action="" class="form" style="display: flex; flex-direction: column;">
     {{ form.hidden_tag() }}
     {% for field in form %}
@@ -15,5 +15,6 @@
     {% endfor %}
     <br/>
 </form>
+</div>
 
 {% endblock %}

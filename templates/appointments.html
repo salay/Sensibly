@@ -1,51 +1,67 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <link rel="stylesheet" href="../static/appointments.css">
 
-<div class="wrapper container">
+<div class="wrapper container" style="display:flex">
     
-            <div class="appointments-table">
-            <h4>Here are your appointments:</h4>
-
-            <div>
-            <th>Appointment Time</th>
-            {% for appointment in appointments_template %}
-
-            <div>
-            <form action="" method="POST">
-                    <input name="appointment_id" type="hidden" value="{{appointment.id}}">
-                    <i name="submit" type="submit" value="Edit", class_="button" data-toggle="modal" data-target="#exampleModal" class="far fa-edit"></i>
-                    <input name="submit" type="submit" value="Cancel" class_="button">
-            </form>
-            {{ appointment.date.strftime("%A") }},
-            {{ appointment.date.strftime("%x") }}
-            {{ appointment.counselor.firstName}}
-            <br/> 
-            {{ appointment.time }}
-          </div>
-            {% endfor %}
-        </div>
-       
-    </div >
-
-    
-
+<div class="cal">
+  <div class="cal-header" style="display: flex; flex-direction: column; align-items: center; padding-top: 2em">
     <h3>Schedule an appointment with {{current_counselor.firstName}}</h3>
-
+    <h5>Click on the date you want to schedule your appointment</h5>
+  </div>
         <div class="calendar-wrapper">
                 <button id="btnPrev" type="button">Prev</button>
                     <button id="btnNext" type="button">Next</button>
                 <div id="divCal"></div>
               </div>
-
+            </div>
               {% include "modal.html"%}
-        
-      <script src="../static/appointments.js"></script>
+
+              <div id="appointments-table" style="width:450px; padding-top: 9.3em;">
+                  <button onclick=viewAppointments()>View your appointments</button>
+      
+                  <div id="your-appointments" style="display: block; width:450px;">
+                    
+                  {% for appointment in appointments_template %}
+      
+                  <div>
+                  {{ appointment.date.strftime("%A") }},
+                  {{ appointment.date.strftime("%x") }}
+                  <br/>
+                  Therapist: {{ appointment.counselor.firstName}}
+                  <br/> 
+                  {{ appointment.time }}
+                </div>
+                <form action="" method="POST">
+                    <input name="appointment_id" type="hidden" value="{{appointment.id}}">
+                    <i name="submit" type="submit" value="Edit", class_="button" data-toggle="modal" data-target="#editAppointmentModal" class="far fa-edit"> Edit</i>
+                    <input name="submit" type="submit" value="Cancel" class_="button">
+            </form>
+            <br/>
+                  {% endfor %}
+              </div>
+             
+           </div >
+      <script>
+           function viewAppointments() {
+            console.log('clicked view appt')
+            var appointmentsTable = document.getElementById("your-appointments");
+            if (appointmentsTable.style.display != 'none') {
+            appointmentsTable.style.display = 'none';
+            }
+            else if (appointmentsTable.style.display == 'none') {
+                appointmentsTable.style.display = 'block';
+            }
+        }
+          
+      </script>
               
 </div>
 
+{% include "editAppointment.html"%}
+
+<script src="../static/appointments.js"></script>
 {% endblock %}
 
 

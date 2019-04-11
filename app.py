@@ -61,6 +61,7 @@ def profile():
     user_id = int(current_user.id)
     user_data = models.User.get(models.User.id == user_id)
     form = EditProfileForm()
+    appointments = models.Appointment.select().where(models.Appointment.client == current_user.id)
     #user_id = request.form.get('user_id', '')
     command = request.form.get('submit', '')
     if command == 'Edit Profile':
@@ -79,7 +80,7 @@ def profile():
         user.save()
         return redirect('/my-profile')
 
-    return render_template("edit_profile.html", user=user_data, form=form)
+    return render_template("edit_profile.html", user=user_data, form=form, appointments_template= appointments)
 
 
 @app.route('/schedule/',  methods=['GET', 'POST', 'DELETE'])
@@ -96,14 +97,38 @@ def get_schedule():
     return render_template("schedule.html", appointments=appointments, form=form)
 
 
+@app.route('/appointments/<counselor_id>/edit',  methods=['GET', 'POST', 'DELETE'])
+def edit_appointment(counselor_id):
+    counselor_id = int(counselor_id)
+    current_counselor = models.User.select().where(models.User.id == counselor_id)[0]
+    #array of the appointments made by the user
+    appointments = models.Appointment.select().where(models.Appointment.client == current_user.id)
+    appointment_id = request.form.get('appointment_id', '')
+    command = request.form.get('submit', '')
+
+    form= forms.MakeAppointment()
+
+    if form.validate_on_submit:
+        print("hey I'm editing yay!")
+        print(appointment_id)
+        appointment = models.Appointment.get(models.Appointment.id == int(appointment_id))
+        
+        form.date.data = appointment.date 
+        form.time.data = appointment.time
+        counselor_id = appointment.counselor_id
+        current_user.id = appointment.current_user.id    
+        return redirect(url_for("schedule", counselor_id=counselor_id))
+    return render_template("appointments.html", appointments_template=appointments, form=form, current_counselor=current_counselor, counselor_id=counselor_id)
+
+
 @app.route('/appointments/<counselor_id>',  methods=['GET', 'POST', 'DELETE'])
 def schedule(counselor_id):
     counselor_id = int(counselor_id)
 
-    current_counselor = models.User.select().limit(10).where(models.User.id == counselor_id)[0]
+    current_counselor = models.User.select().where(models.User.id == counselor_id)[0]
 
     #array of the appointments made by the user
-    appointments = models.Appointment.select().limit(10).where(models.Appointment.client == current_user.id)
+    appointments = models.Appointment.select().where(models.Appointment.client == current_user.id)
 
     counselors_for_appointments = []
     for i in appointments:
@@ -133,40 +158,40 @@ def schedule(counselor_id):
     if command == 'Cancel':
         models.Appointment.delete_by_id(appointment_id)
         return redirect(url_for("schedule", counselor_id=counselor_id))
-    elif command == 'Edit':
-        print("hey I'm editing yay!")
-        appointment = models.Appointment.get(models.Appointment.id == appointment_id)
-        form.date.data = appointment.date 
-        form.time.data = appointment.time
-        counselor_id = appointment.counselor_id
-        current_user.id = appointment.current_user.id    
-        return redirect(url_for("schedule", counselor_id=counselor_id))
+    # elif command == 'Edit':
+    #     print("hey I'm editing yay!")
+    #     appointment = models.Appointment.get(models.Appointment.id == appointment_id)
+    #     form.date.data = appointment.date 
+    #     form.time.data = appointment.time
+    #     counselor_id = appointment.counselor_id
+    #     current_user.id = appointment.current_user.id    
+    #     return redirect(url_for("schedule", counselor_id=counselor_id))
 
 #creates a new appointment
     if form.validate_on_submit():
-        print("I'm creating an appt")
-        appointmentTaken = models.Appointment.select().where(
-            (models.Appointment.counselor == counselor_id) &
-            (models.Appointment.date == form.date.data) &
-            (models.Appointment.time == form.time.data)
-            )
-        #print(appointmentTaken)
-
-
-    #if form.id.data == '': 
-        # if !models.Appointment.select().where(models.Appointment.counselor == counselor_id and models.Appointment.date == form.date.data and models.Appointment.time == form.time.data)
-        if appointmentTaken.count() == 0:
-            
-            flash("Created New Appointment","success")
-            models.Appointment.create_appointment(
-                date=form.date.data, 
-                time=form.time.data, 
-                counselor = counselor_id,
-                client = current_user.id
+        if form.date.data > datetime.date.today():
+            print("I'm creating an appt")
+            appointmentTaken = models.Appointment.select().where(
+                (models.Appointment.counselor == counselor_id) &
+                (models.Appointment.date == form.date.data) &
+                (models.Appointment.time == form.time.data)
                 )
-            return redirect(url_for("schedule", counselor_id=counselor_id))
+            #print(appointmentTaken)
+
+
+        #if form.id.data == '': 
+            # if !models.Appointment.select().where(models.Appointment.counselor == counselor_id and models.Appointment.date == form.date.data and models.Appointment.time == form.time.data)
+            if appointmentTaken.count() == 0:
+                flash("Created New Appointment.","success")
+                models.Appointment.create_appointment(
+                    date=form.date.data, 
+                    time=form.time.data, 
+                    counselor = counselor_id,
+                    client = current_user.id
+                    )
+                return redirect(url_for("schedule", counselor_id=counselor_id))
         else:
-            flash("Appoinment slot already taken please schedule another appointment sorry","error")
+            flash("Appoinment slot already taken.","error")
             return redirect(url_for("schedule", counselor_id=counselor_id))
     
     # else:
@@ -177,11 +202,11 @@ def schedule(counselor_id):
 @app.route('/all-therapists/', methods=['GET', 'POST'])
 #@app.route('/schedule/<provider-username>', methods=['POST', 'GET']) (counselors)
 def therapists():
-    therapists = models.User.select().limit(10).where(models.User.isCounselor == 1)
+    therapists = models.User.select().where(models.User.isCounselor == 1)
     return render_template("therapists.html", therapists_template = therapists)
 
 @app.route('/therapist-profile/<counselor_id>', methods=['GET', 'POST'])
-def therapistProfile(counselor_id = " mary "):
+def therapistProfile(counselor_id = " "):
         counselor_id = int(counselor_id)
         user_data = models.User.get(models.User.id == counselor_id)
         return render_template("therapist_profile.html", user=user_data, counselor_id = counselor_id)
