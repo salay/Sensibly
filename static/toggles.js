@@ -18,3 +18,4 @@ function editProfile() {
         editProf.style.display = 'block';
     }
 }
+

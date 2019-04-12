@@ -62,3 +62,33 @@
       font-size: 14px;
       }
 }
+
+
+
+
+.about-wrapper {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  font-family: sans-serif !important;
+}
+
+
+.text-wrapper {
+  width: 30%;
+  margin: 2em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-wrapper img {
+  text-align: center;
+  height: 300px;
+  width: 330px;
+}
+
+

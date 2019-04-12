@@ -76,7 +76,6 @@ var Cal = function(divId) {
     html += '<td colspan="7"><span id="currentMonth">' + this.Months[m] + '</span> <span id="currentYear">' + y  + '</span>' + '</td>';
     html += '</tr></thead>';
     
-    
     // Write the header of the days of the week
     html += '<tr class="days">';
     for(var i=0; i < this.DaysOfWeek.length;i++) {
@@ -135,7 +134,8 @@ var Cal = function(divId) {
       }
     
       i++;
-    }while(i <= lastDateOfMonth);
+    }
+    while(i <= lastDateOfMonth);
     
     // Closes table
     html += '</table>';
@@ -164,7 +164,6 @@ var Cal = function(divId) {
     function getId(id) {
     return document.getElementById(id);
     }
-    
     
     function populateDate(e) {
       console.log(e)
