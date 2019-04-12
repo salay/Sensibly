@@ -15,16 +15,18 @@ An Acuity-like scheduling app for therapists....
 
 ## Features:
 Flask Authentication with Validation (Register for Account and Login)
+
 Flexible Search Bar
+
 User Profile Page
 
 Accessibility was restricted when users were not signed in OR if users were not counselors:
-Could not create appointments if not signed in.
-If signed in as a user, you couldn't view a schedule of appointments (because you don't have one).
-Cannot schedule appointments with non-counselors or view client profiles. 
-Cannot view anyone's personal profile or therapist's schedule other than your own.
+- Could not create appointments if not signed in.
+- If signed in as a user, you couldn't view a schedule of appointments (because you don't have one).
+- Cannot schedule appointments with non-counselors or view client profiles. 
+- Cannot view anyone's personal profile or therapist's schedule other than your own.
 
-Appointments Page has full CRUD
+Appointments Page has full CRUD:
 User can click on a date, make an appointment, view that appointment on the same page, edit the appointment, and delete the apointment
 
 #### Wins
@@ -39,9 +41,13 @@ User can click on a date, make an appointment, view that appointment on the same
 
 ##### Shoutouts
 Thank you stackoverflow.
+
 All of the instructors.
+
 Matt (help with calendar & scheduling)
+
 Heggy (error messages), Tiffany (edit), Nassima (setting up models), Amberly (postgres migration)
+
 All of the students in the class. 
 
 #### Code I'm proud of:
