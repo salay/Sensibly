@@ -54,6 +54,10 @@
   td.before {
       background: #e3ddd0;
   }
+
+  td.before:hover {
+    cursor: default !important;
+  }
   
   td.normal:hover, td.today:hover {
     cursor: pointer;

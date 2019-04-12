@@ -4,6 +4,7 @@
 {% from 'macros.html' import render_field %}
 
 <div class="container">
+<h2>Register For an Account!</h2>
 <form method="POST" action="" class="form">
     {{ form.hidden_tag() }}
     {% for field in form %}
@@ -14,15 +15,53 @@
     <button type="submit" id="submit">Register!</button>
 </form>
 </div>
+
+
+<style>
+    h2 {
+        margin: 1.2em 0 .7em 0;
+    }
+    form, .container {
+        text-align: center;
+    }
+    input, select {
+        width: 300px;
+        height: 40px;
+        margin: .5em 0;
+        font-size: 18px;
+        background: white;
+        color: grey;
+    }
+
+    #submit {
+        width: 300px;
+        height: 40px;
+        margin: 1em 0 3em 0;
+        font-size: 18px;
+    }
+
+    input[type='checkbox'] {
+    -webkit-appearance:none;
+    width:30px;
+    height:30px;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
+
+input[type='checkbox']:checked {
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 48px;
+  width: 30px;
+  border-bottom: 7px solid black;
+  border-right: 7px solid black;
+  border-top: none;
+  border-left: none;
+
+}
+</style>
 {% endblock %}
-
-<!-- 
-email = CharField(unique=True)
-    password = CharField(max_length=100)
-    isCounselor = BooleanField(default="False")
-
-WHAT ARE MACROS????
--->
 
     
           

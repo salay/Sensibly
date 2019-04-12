@@ -1,16 +1,33 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div class="container" style="text-align: center; margin-top: 2em">
 <form method="POST" action="{{ url_for('login') }}" class="form">
     {{ form.hidden_tag() }}
             <div>
             {{ form.email.label }}
+            <br/>
             {{ form.email() }}
             </div>
             <div>
             {{ form.password.label }}
+            <br/>
             {{ form.password() }}
             </div>
+            <br/>
     <button type="submit" id="submit">Login</button>
 </form>
+</div>
+
+<style>
+
+label{
+    margin-top: 1.5em;
+}
+
+button {
+    width: 120px;
+}
+
+</style>
 {% endblock %}

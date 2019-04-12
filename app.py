@@ -8,6 +8,7 @@ import models
 import forms
 
 import datetime
+import os
 
 from forms import MakeAppointment, RegisterForm, LoginForm, EditProfileForm
 
@@ -202,11 +203,15 @@ def schedule(counselor_id):
                     client = current_user.id
                     )
                 return redirect(url_for("schedule", counselor_id=counselor_id))
+            else:
+                flash("Appoinment slot already taken.","error")
+                return redirect(url_for("schedule", counselor_id=counselor_id))
         else:
-            flash("Appoinment slot already taken.","error")
+            flash("Appoinment cannot be scheduled in the past.","error")
             return redirect(url_for("schedule", counselor_id=counselor_id))
 
     return render_template("appointments.html", appointments_template=appointments, form=form, counselors=counselors_for_appointments, current_counselor=current_counselor)
+
 
 
 
@@ -280,22 +285,10 @@ def logout():
     return redirect(url_for('index'))
 
 
+if 'ON_HEROKU' in os.environ:
+    print('hitting ')
+    models.initialize()
+
 if __name__ == '__main__':
     models.initialize()
-    try:
-        models.User.create_user(
-            firstName="Jiminy",
-            lastName="Bob",
-            email="jim@jim.com",
-            password='password',
-            isCounselor = False,
-            phone = 1234567,
-            address = "123 Nowhere Dr.",
-            city = "Nowhere",
-            state = "MT",
-            zipcode = 12345,
-            picture = " ",
-            )
-    except ValueError:
-        pass
     app.run(debug=DEBUG, port=PORT)

@@ -9,11 +9,18 @@
 
 <h5  style="margin-bottom: 2em;">Click on the therapist you want to schedule an appointment with</h5>
 
+
+<div class="search-input">
+        <input  style="margin-bottom: 2em; border-radius: 5px; width: 300px;" type="text" class="search" id="myInput" onkeyup="searchFunction()" placeholder="Search Therapists by Name">
+</div> 
+
+
+<div id="all-therapists">
 {% for therapist in therapists_template %}
-<article class="message is-primary"  style="margin-bottom: 2em;">
+<article class="message is-primary"  style="margin-bottom: 2em; display:block;">
     <div class="message-body" style="display: flex; flex-direction: column;  ">
         <a href={{url_for('schedule', counselor_id = therapist.id)}}>
-        <h4>{{therapist.firstName}} {{therapist.lastName}}</h4>
+        <h4 class="therapist-name">{{therapist.firstName}} {{therapist.lastName}}</h4>
         <img src="{{ therapist.picture }}" style="height: 200px; width: auto;">
         </a>
         <button style="width: 300px; margin: 1em 0;">
@@ -30,22 +37,34 @@
 </article>
 <br/>
 {% endfor %}
+</div>
 
 {%else%}
 
+<h5  style="margin: 1em 0 2em 0;">Click on a therapist to view their profile</h5>
+
+<div class="search-input">
+        <input  style="margin: 1em 0; border-radius: 5px; width: 300px;" type="text" class="search" id="myInput" onkeyup="searchFunction()" placeholder="Search Therapists by Name">
+</div> 
+
+
+<div id="all-therapists">
 {% for therapist in therapists_template %}
-<article class="message is-primary"  style="margin-bottom: 2em;">
+<article class="message is-primary"  style="margin-bottom: 2em; display:block;">
     <div class="message-body" style="display: flex; flex-direction: column;  ">
-        <a href={{url_for('schedule', counselor_id = therapist.id)}}>
-        <h4>{{therapist.firstName}} {{therapist.lastName}}</h4>
+        <a href={{url_for('therapistProfile', counselor_id = therapist.id)}}>
+        <h4 class="therapist-name">{{therapist.firstName}} {{therapist.lastName}}</h4>
         <img src="{{ therapist.picture }}" style="height: 200px; width: auto;">
         </a>
     </div>
 </article>
 <br/>
 {% endfor %}
+</div>
 
 {%endif%}
 </div>
+
+<script src="../static/therapists.js"></script>
 
 {% endblock %}

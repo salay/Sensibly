@@ -1,12 +1,24 @@
 {% extends "layout.html"%}
 
 {% block content%}
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+<!-- Google Maps API-->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg&libraries=places&sensor=false"></script>
+<!-- <script id = "mapSource" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg"></script> -->
+
+       
+<div class="container">
+      
         {% if user.isCounselor == True %}
         <article class="message secondary">
             <div class="profile-pic">
                 <img class="rounded-circle account-img" src="{{ user.picture }}" style="height: 500px; width: auto;">
             </div>
+
             <div class="media-body message-body">
                 <h2 class="account-heading">Profile for <span>{{user.firstName}} {{user.lastName}}</span></h2>
                 <p class="text-secondary">Name: <span>{{user.firstName}} {{user.lastName}}</span> </p>
@@ -15,15 +27,189 @@
                 <p class="text-secondary"><span>{{user.city}}, {{user.state}} {{user.zipcode}}</span></p>
                 <p class="text-secondary">Date Joined: <span>{{user.joined_at.strftime("%x") }}</span></p>
                 <p class="text-secondary"> Status: <span>Counselor</span> </p> 
-                    <button>
+                
+                {% if current_user.is_authenticated %}
+                    <button style="margin-bottom: 3em;">
                             <a href={{url_for('schedule', counselor_id = user.id)}}>
                             Schedule an appointment with {{user.firstName}} {{user.lastName}}
                             </a>
                     </button>
-
-            </div>
+                {% else %}
+                <h5  style="margin: 1em 0 2em 0;">Login or Register for an Account to Schedule an Appointment with {{user.firstName}}</h5>
+                {% endif %}
+            
         </article>
-        {% endif %}
+        
+</div>
+
+<input id="pac-input" class="controls" type="text" placeholder="Search Box" value="{{user.address}}, {{user.city}}, {{user.state}} {{user.zipcode}}">
+<div id="map"></div>
+<div id="info"></div>
+{% endif %}
+<style>
+#map {
+  height: 60%;
+  width: 60%;
+  margin: 0 auto;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 60%;
+}
+
+#pac-input{
+    height: 40px;
+    width: 400px;
+    margin-top: .5em;
+    font-size: 18px;
+    border: 2px solid grey;
+}
+
+</style>
+
+
+    <script>
+
+// $(document).ready(function() {
+  console.log("Let's get coding!");
+       var map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.7749, lng: -122.4194 },
+          zoom: 11
+        });
+      }
+
+
+      function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.7749, lng: -122.4194 },
+          zoom: 12,
+          mapTypeId: 'roadmap'
+        });
+     
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+
+//       $.ajax({
+//         method: 'GET',
+//         url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson",
+//         success:
+//          function (response){
+//             //console.log(response);
+//             var count = response.metadata.count;
+//             //console.log(response.metadata.count);
+
+//             for(var i = 0; i < count; i++){
+//             var place = response.features[i].properties.place;
+//             //console.log(place);
+//             var time = response.features[i].properties.time;
+//             var myDate = new Date( time *1000);
+
+
+//             $('#quakes').append(`<li> An earthquake happened: <br>
+//                                 ${place} <br>
+//                                 on ${myDate} </li><br>`);
+
+
+// //begin the maps!
+
+
+//             var coords = response.features[i].geometry.coordinates;
+//             console.log(coords)
+//           var image = {
+//           url: '/Users/default/desktop/wdi-51/sf-wdi-51-assignments/siri-salay/week-3/jquery-geoquakes-lab/images/earthquake.png',
+//           scaledSize: new google.maps.Size(20, 20) // scaled size
+//             };
+
+//         // variable is the latitude and longitude features on the google maps object
+//             var coordinates = new google.maps.LatLng(coords[1],coords[0]);
+//             var marker = new google.maps.Marker({
+//             position: coordinates,
+//             map: map,
+//             icon: image
+//           });
+
+//            };
+
+//         }, //end of success
+
+
+//         error:
+//         function (response){
+//         console.log("error");
+
+//         } //end of error
+
+
+//       }); // end of ajax
+        initAutocomplete();
+
+        
+
+    //});  //end of document.ready function
+
+
+    </script>
 
     {%endblock%}
    

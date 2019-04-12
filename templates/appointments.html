@@ -6,10 +6,13 @@
 <div class="wrapper container" style="display:flex">
     
 <div class="cal">
-  <div class="cal-header" style="display: flex; flex-direction: column; align-items: center; padding-top: 2em">
+<div class="header"  style="display: flex; padding-top: 2em;">
+  <div class="cal-header" style="display: flex; flex-direction: column; align-items: center; padding: 1em 0 0 4em;">
     <h3>Schedule an appointment with {{current_counselor.firstName}}</h3>
     <h5>Click on the date you want to schedule your appointment</h5>
   </div>
+  <img style="height: 100px; width: auto; padding-left: 2em;" src="{{current_counselor.picture}}" alt="{{current_counselor.firstName}}">
+</div>
         <div class="calendar-wrapper">
                 <button id="btnPrev" type="button">Prev</button>
                     <button id="btnNext" type="button">Next</button>

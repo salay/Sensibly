@@ -5,7 +5,13 @@ from peewee import *
 from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
 
-DATABASE = SqliteDatabase('sensibly.db')
+import os
+
+from playhouse.db_url import connect
+
+DATABASE = connect(os.environ.get('DATABASE_URL'))
+# DATABASE = SqliteDatabase('sensibly.db')
+# DATABASE = PostgresqlDatabase('sensibly')
 
 class User(UserMixin, Model):
     firstName = CharField()
