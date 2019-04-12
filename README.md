@@ -32,16 +32,16 @@ Recipe Page & Form with full CRUD
 Nested Reviews & Form with full CRUD
 
 
-####Wins
+#### Wins
 Flask auth Worked on Day 2 of this project.
 Making a calendar!
 404 page was so easy to put in place.
 
-####Challenges
+#### Challenges
 Making a Calendar.
 Edit functionality for appointments. 
 
-#####Shoutouts
+##### Shoutouts
 
-####Code I'm proud of:
+#### Code I'm proud of:
 
