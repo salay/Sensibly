@@ -46,7 +46,7 @@ User can click on a date, make an appointment, view that appointment on the same
 Thank you stackoverflow.  
 All of the instructors.  
 Matt (help with calendar & scheduling)  
-Heggy (error messages, wireframes & deployment), Tiffany (edit), Nassima (setting up models), Amberly (postgres migration  
+Heggy (error messages, wireframes & deployment), Tiffany (edit), Nassima (setting up models), Amberly (postgres migration)   
 All of the students in the class. 
 
 #### Code I'm proud of:
