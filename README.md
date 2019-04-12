@@ -52,8 +52,9 @@ All of the students in the class.
 #### Code I'm proud of:
 
 Appointments cannot be scheduled in the past on neither the frontend, nor the backend.
-Appointments
-![Screenshot ](../master/Sensibly-app.py.png)
+Appointments cannot be duplicated.
+
+![Screenshot ](../master/Sensibly-app.png)
 
 Edit Functionality for App.py is on separate route to make it work.
 ![Screenshot ](../master/Sensibly-app.py-edit.png)
