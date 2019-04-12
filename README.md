@@ -31,18 +31,18 @@ Accessibility was restricted when users were not signed in OR if users were not 
 Appointments Page has full CRUD:  
 User can click on a date, make an appointment, view that appointment on the same page, edit the appointment, and delete the apointment
 
-#### Wins
+### Wins
 - Flask auth Worked on Day 2 of this project.
 - Making a calendar!
 - 404 page was so easy to put in place.
 
-#### Challenges
+### Challenges
 - Making a Calendar.
 - Edit functionality for appointments. 
 - Working in Modals.
 - all-therapists route is slow. I don't know why yet.
 
-##### Shoutouts
+#### Shoutouts
 Thank you stackoverflow.  
 All of the instructors.  
 Matt (help with calendar & scheduling)  
@@ -51,6 +51,11 @@ All of the students in the class.
 
 #### Code I'm proud of:
 
+Appointments cannot be scheduled in the past on neither the frontend, nor the backend.
+Appointments
+![Screenshot ](../master/Sensibly-app.py.png)
+
+Edit Functionality for App.py is on separate route to make it work.
 ![Screenshot ](../master/Sensibly-app.py-edit.png)
 
 
