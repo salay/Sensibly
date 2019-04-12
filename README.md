@@ -3,6 +3,8 @@
 An Acuity-like scheduling app for therapists....
 (that might've devolved into an app to schedule time with therapy dogs).
 
+Deployed here: https://sensibly-capstone.herokuapp.com/
+
 ## Technologies Used: 
 - [Python](https://www.python.org/)
 - [WTForms](https://wtforms.readthedocs.io/en/stable/)
