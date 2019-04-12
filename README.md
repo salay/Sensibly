@@ -14,7 +14,7 @@ An Acuity-like scheduling app for therapists....
 - [Bootstrap](https://getbootstrap.com/)
 
 ## Features:
-Flask Authentication with Validation (Login and Register for Account)
+Flask Authentication with Validation (Register for Account and Login)
 Flexible Search Bar
 User Profile Page
 
@@ -24,22 +24,18 @@ If signed in as a user, you couldn't view a schedule of appointments (because yo
 Cannot schedule appointments with non-counselors or view client profiles. 
 Cannot view anyone's personal profile or therapist's schedule other than your own.
 
-User Profile with edit functionality
-User Recipe Posts
-Recipe & Reviews Page
-
-Recipe Page & Form with full CRUD
-Nested Reviews & Form with full CRUD
-
+Appointments Page has full CRUD
+User can click on a date, make an appointment, view that appointment on the same page, edit the appointment, and delete the apointment
 
 #### Wins
-Flask auth Worked on Day 2 of this project.
-Making a calendar!
-404 page was so easy to put in place.
+- Flask auth Worked on Day 2 of this project.
+- Making a calendar!
+- 404 page was so easy to put in place.
 
 #### Challenges
-Making a Calendar.
-Edit functionality for appointments. 
+- Making a Calendar.
+- Edit functionality for appointments. 
+- Working in Modals.
 
 ##### Shoutouts
 
