@@ -38,6 +38,7 @@ User can click on a date, make an appointment, view that appointment on the same
 - Making a Calendar.
 - Edit functionality for appointments. 
 - Working in Modals.
+- all-therapists route is slow. I don't know why yet.
 
 ##### Shoutouts
 Thank you stackoverflow.  
