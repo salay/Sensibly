@@ -26,7 +26,7 @@ Accessibility was restricted when users were not signed in OR if users were not 
 - Cannot schedule appointments with non-counselors or view client profiles. 
 - Cannot view anyone's personal profile or therapist's schedule other than your own.
 
-Appointments Page has full CRUD:
+Appointments Page has full CRUD:  
 User can click on a date, make an appointment, view that appointment on the same page, edit the appointment, and delete the apointment
 
 #### Wins
@@ -40,14 +40,10 @@ User can click on a date, make an appointment, view that appointment on the same
 - Working in Modals.
 
 ##### Shoutouts
-Thank you stackoverflow.
-
-All of the instructors.
-
-Matt (help with calendar & scheduling)
-
-Heggy (error messages), Tiffany (edit), Nassima (setting up models), Amberly (postgres migration)
-
+Thank you stackoverflow.  
+All of the instructors.  
+Matt (help with calendar & scheduling)  
+Heggy (error messages), Tiffany (edit), Nassima (setting up models), Amberly (postgres migration) 
 All of the students in the class. 
 
 #### Code I'm proud of:
