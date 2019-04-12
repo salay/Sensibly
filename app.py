@@ -159,7 +159,6 @@ def edit_appointment(counselor_id):
 @app.route('/appointments/<counselor_id>',  methods=['GET', 'POST', 'DELETE'])
 def schedule(counselor_id):
     counselor_id = int(counselor_id)
-
     current_counselor = models.User.select().where(models.User.id == counselor_id)[0]
 
     #array of the appointments made by the user
@@ -178,7 +177,6 @@ def schedule(counselor_id):
     if command == 'Cancel':
         models.Appointment.delete_by_id(appointment_id)
         return redirect(url_for("schedule", counselor_id=counselor_id))
-
 #creates a new appointment
     if form.validate_on_submit():
         #cannot create appointment in the past
@@ -190,7 +188,6 @@ def schedule(counselor_id):
                 (models.Appointment.time == form.time.data)
                 )
             #print(appointmentTaken)
-
 
         # why doesn't this work: if !models.Appointment.select().where(models.Appointment.counselor == counselor_id and models.Appointment.date == form.date.data and models.Appointment.time == form.time.data)
         # code below checks to see if appoitnment is taken

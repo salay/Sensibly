@@ -3,6 +3,46 @@
 font-family: 'Comfortaa', cursive;
 }
 
+
+#hamburger {
+    text-align: right; 
+    padding-right: 1em; 
+    display: none;
+}
+
+#hamburger img {
+    height: 40px; 
+    width: auto;
+}
+
+#navigation{
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+nav, #navigation{
+    font-size: 20px;
+}
+
+
+@media only screen and (max-width: 800px) {
+    #hamburger { 
+        display: block;
+  }
+
+  #navigation{
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+
+nav {
+    display: none !important;
+}
+}
+
 body{
     background: #fcf9f3;
     
@@ -25,6 +65,7 @@ a {
 }
 
 nav {
+    display: default;
     background: #f1efee;
     margin: 0 5em;
     line-height: 1em;

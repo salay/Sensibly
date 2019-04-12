@@ -9,9 +9,9 @@ import os
 
 from playhouse.db_url import connect
 
-DATABASE = connect(os.environ.get('DATABASE_URL'))
+#DATABASE = connect(os.environ.get('DATABASE_URL'))
 # DATABASE = SqliteDatabase('sensibly.db')
-# DATABASE = PostgresqlDatabase('sensibly')
+DATABASE = PostgresqlDatabase('sensibly')
 
 class User(UserMixin, Model):
     firstName = CharField()

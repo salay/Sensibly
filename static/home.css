@@ -38,3 +38,27 @@
     font-size: 36px;
     }
 
+
+@media only screen and (max-width: 800px) {
+
+  .hero-text h1 {
+    font-size: 66px;
+    }
+  
+    .hero-text h6 {
+      font-size: 22px;
+      }
+}
+
+
+
+@media only screen and (max-width: 500px) {
+
+  .hero-text h1 {
+    font-size: 46px;
+    }
+  
+    .hero-text h6 {
+      font-size: 14px;
+      }
+}

@@ -14,7 +14,6 @@
 
 /* calendar styles */
 
-  
   html, body {
     height:100%;
   }
@@ -45,12 +44,6 @@
     font-size:1.5em;
   }
 
-
-  /* td.normal, td.today{
-    border: 1px solid black;
-  } */
-
-  
   td.before {
       background: #e3ddd0;
   }

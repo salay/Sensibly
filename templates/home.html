@@ -21,6 +21,38 @@
   <div class = "wrapper">
     <div class="hero">
 
+<div id="hamburger">
+<img src="https://static.thenounproject.com/png/1061782-200.png" alt="hamburger" onclick=toggleNav()>
+<div id="navigation">
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('therapists') }}">Schedule An Appointment!</a>
+        <a href="{{url_for('profile')}}">{{current_user.firstName}}'s Profile</a>
+        <a href="{{url_for('logout')}}" title="logout">Logout</a>
+        {% if current_user.isCounselor == True %}
+        <a href={{url_for('get_schedule', counselor_id = current_user.id)}}>Your Schedule</a>
+        {%endif%}
+        {% else %}
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{url_for('login')}}" title="login">Login</a>
+        <a href="{{url_for('register')}}" title="register">Register</a>
+        <a href="{{ url_for('therapists') }}">View all therapists</a>
+    {% endif %}
+</div>
+</div>
+
+<script>
+function toggleNav() {
+  var navigation = document.getElementById("navigation");
+    if (navigation.style.display != 'none') {
+    navigation.style.display = 'none';
+    }
+    else if (navigation.style.display == 'none') {
+        navigation.style.display = 'flex';
+    }
+}
+</script>
+
       <nav class="navbar navbar-fixed-top" role="navigation" aria-label="main navigation">
         {% if current_user.is_authenticated %}
         <a href="{{ url_for('index') }}">Home</a>
